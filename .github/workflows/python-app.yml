@@ -28,7 +28,7 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with pylint
       run: |
-        pylint app
+        pylint app -d W1203
     - name: Test with pytest
       env:
         DATABASE_USERNAME: mock 

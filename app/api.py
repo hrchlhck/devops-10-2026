@@ -18,7 +18,9 @@ LOGGER.setLevel(logging.INFO)
 arquivo = logging.FileHandler("aplicacao.log", encoding='utf-8')
 saida_padrao = logging.StreamHandler()
 
-formatador = logging.Formatter("%(name)s | %(levelname)s | %(asctime)s | %(filename)s:%(lineno)s | %(message)s")
+formatador = logging.Formatter(
+    "%(name)s | %(levelname)s | %(asctime)s | %(filename)s:%(lineno)s | %(message)s"
+)
 
 arquivo.setFormatter(formatador)
 saida_padrao.setFormatter(formatador)
@@ -72,6 +74,7 @@ TAREFAS = []
 
 @APP.exception_handler(404)
 async def trata_404(_, __):
+    """ Rota para erros. """
     LOGGER.error("Página inexistente")
     return JSONResponse({"mensagem": "Página inexistente"})
 
@@ -141,7 +144,10 @@ async def concluir_tarefa(sessao: SESSAO, id_tarefa: int):
         return {"mensagem": "Tarefa não existe"}
 
     if resultado[0].concluida is True:
-        LOGGER.info(f"Usuário tentou finalizar a tafefa {resultado[0].get_id()} que já está finalizada")
+        LOGGER.info(
+            "Usuário tentou finalizar a tarefa " 
+            f"{resultado[0].get_id()} que já está finalizada"
+        )
         return {"mensagem": "Tarefa já finalizada"}
 
     resultado[0].finalizar()
